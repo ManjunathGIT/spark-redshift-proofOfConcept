@@ -26,7 +26,7 @@ class FromS3ToRedshift extends Matchers with ShouldVerb with ScalaFutures with E
 
   Then("""^I copy file "([^"]*)" in bucket "([^"]*)" into db "([^"]*)" and table "([^"]*)"$"""){
     (csvFileName:String, bucketName:String, dbName:String, tableName:String) =>
-
+      copyCsvIntoTable(s"s3://$bucketName/$csvFileName", tableName)
 
   }
 

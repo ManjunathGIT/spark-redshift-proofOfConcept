@@ -2,7 +2,7 @@ package org.sparkRedshift.tutorial.test
 
 import java.sql.{Connection, DriverManager}
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.redshift.AmazonRedshiftClient
 import com.amazonaws.services.redshift.model.{DeleteClusterRequest, CreateClusterRequest}
 import org.slf4j.{LoggerFactory, Logger}
@@ -10,7 +10,7 @@ import org.sparkRedshift.tutorial.AwsConfigParameters
 import java.util.Properties
 
 
-trait AcceptanceTestRedshiftUtils extends AwsConfigParameters{
+trait AcceptanceTestRedshiftUtils extends AwsConfigParameters {
 
   private val LOG: Logger = LoggerFactory.getLogger("AcceptanceTestRedshiftUtils")
 
@@ -19,14 +19,30 @@ trait AcceptanceTestRedshiftUtils extends AwsConfigParameters{
 
   def tableExist(tableName:String):Boolean = {
     val redshiftJDBCClient = redshiftConnectionJDBC()
-    val resultSet = redshiftJDBCClient.prepareStatement(s"select count(distinct(tablename)) from pg_table_def where schemaname = 'public' and tablename ='$tableName';").executeQuery()
+
+    val q = s"select count(distinct(tablename)) from pg_table_def where schemaname = 'public' and tablename ='$tableName';"
+    val stmt = redshiftJDBCClient.createStatement()
+    val resultSet = stmt.executeQuery(q)
+
+    resultSet.next()
     val tableExist = resultSet.getInt(1) == 1
+
     resultSet.close()
+    stmt.close()
     redshiftJDBCClient.close()
+
     tableExist
   }
 
-
+  def copyCsvIntoTable(csvPath:String, tableName:String):Boolean = {
+    val redshiftJDBCClient = redshiftConnectionJDBC()
+    val q = s"copy $tableName from '$csvPath' credentials 'aws_access_key_id=$getAwsAccessKey;aws_secret_access_key=$getAwsSecretKey' delimiter '|' region 'eu-west-1';"
+    val stmt = redshiftJDBCClient.createStatement()
+    val status = stmt.execute(q)
+    stmt.close()
+    redshiftJDBCClient.close()
+    status
+  }
 
   def createCluster(clusterName:String):String = {
     val clusterRequest = new CreateClusterRequest()
@@ -48,7 +64,7 @@ trait AcceptanceTestRedshiftUtils extends AwsConfigParameters{
   }
 
   private def initRedshiftClient():AmazonRedshiftClient = {
-    val tmpClient = new AmazonRedshiftClient(new ProfileCredentialsProvider())
+    val tmpClient = new AmazonRedshiftClient(new BasicAWSCredentials(getAwsAccessKey,getAwsSecretKey))
     tmpClient.setEndpoint(getDbhost)
     tmpClient
   }

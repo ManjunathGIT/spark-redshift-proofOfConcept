@@ -24,4 +24,6 @@ trait AwsConfigParameters {
   def getConnectionUrl = s"""jdbc:redshift://$getDbhost:$getDbport/$getDbName?user=$getDbUser&password=$getDbPassword"""
 
   def getS3TmpFolder = "s3n://" + conf.getString("awsRedshiftParamaters.s3BucketfolderPath")
+
+  def getIamRole = conf.getString("awsRedshiftParamaters.aws_iam_role")
 }
