@@ -17,7 +17,20 @@ object RedShiftConnectorImpl extends AwsConfigParameters {
     initSc
   }
 
-  def readTable(tableName : Option[String] , query : Option[String]): DataFrame = {
+  def readTable(tableName : Option[String] , query : Option[String], isTmpTable: Boolean = false): DataFrame = {
+    if(isTmpTable) readTmpTable(tableName, query)
+    else  readRedShiftTable(tableName, query)
+  }
+
+  private def readTmpTable(tableName : Option[String] , query : Option[String]): DataFrame = {
+
+    val finalQuery = query.map(queryStatement => queryStatement)
+                            .getOrElse(tableName.map(optionalTablename => s"select * from $optionalTablename").get)
+
+    sqlContext.sql(finalQuery)
+  }
+
+  private def readRedShiftTable(tableName : Option[String] , query : Option[String]): DataFrame = {
 
     val queryDF = sqlContext.read
       .format("com.databricks.spark.redshift")
@@ -49,6 +62,10 @@ object RedShiftConnectorImpl extends AwsConfigParameters {
 
   def dropTempTable( tempTableName:String):Unit = {
     sqlContext.dropTempTable(tempTableName)
+  }
+
+  def releaseAttachedResources():Unit = {
+     sc.stop()
   }
 
 }

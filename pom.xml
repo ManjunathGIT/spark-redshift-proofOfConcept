@@ -95,6 +95,18 @@
             <version>${scala.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-xml</artifactId>
+            <version>2.11.0-M4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang.modules</groupId>
+            <artifactId>scala-parser-combinators_2.11</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
         <!--logs -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -133,6 +145,7 @@
             <artifactId>spark-redshift_${scala.binary.version}</artifactId>
             <version>0.6.0</version>
         </dependency>
+
 
 
         <!-- acceptance test-->

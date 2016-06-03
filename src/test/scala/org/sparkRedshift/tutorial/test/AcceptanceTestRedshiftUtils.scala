@@ -34,6 +34,16 @@ trait AcceptanceTestRedshiftUtils extends AwsConfigParameters {
     tableExist
   }
 
+  def deleteTable(tableName:String):Boolean = {
+    val redshiftJDBCClient = redshiftConnectionJDBC()
+    val stmt = redshiftJDBCClient.createStatement()
+    val q = s"delete from $tableName"
+    val status = stmt.execute(q)
+    stmt.close()
+    redshiftJDBCClient.close()
+    status
+  }
+
   def copyCsvIntoTable(csvPath:String, tableName:String):Boolean = {
     val redshiftJDBCClient = redshiftConnectionJDBC()
     val q = s"copy $tableName from '$csvPath' credentials 'aws_access_key_id=$getAwsAccessKey;aws_secret_access_key=$getAwsSecretKey' delimiter '|' region 'eu-west-1';"

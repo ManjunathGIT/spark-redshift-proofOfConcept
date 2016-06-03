@@ -66,6 +66,9 @@ object SparkRedshiftTutorialRefactor {
     RedShiftConnectorImpl.writeTable("redshiftsalesagg",SaveMode.Overwrite, "SELECT * FROM redshift_sales_agg", None)
     val redshiftSalesAggDF = RedShiftConnectorImpl.readTable(Some("redshiftsalesagg"), None)
     redshiftSalesAggDF.show()
+
+
+    RedShiftConnectorImpl.releaseAttachedResources()
   }
 
 }
