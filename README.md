@@ -1,5 +1,8 @@
 # spark-redshift proofOfConcept
 
+[![Build Status](https://travis-ci.org/pjgg/spark-redshift-proofOfConcept.svg?branch=master)](https://travis-ci.org/pjgg/spark-redshift-proofOfConcept)
+[![Coverage Status](https://coveralls.io/repos/github/pjgg/spark-redshift-proofOfConcept/badge.svg?branch=master)](https://coveralls.io/github/pjgg/spark-redshift-proofOfConcept?branch=master)
+
 How to use
 ----------
 
