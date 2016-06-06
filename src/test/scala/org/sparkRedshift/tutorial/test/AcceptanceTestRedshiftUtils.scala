@@ -1,6 +1,6 @@
 package org.sparkRedshift.tutorial.test
 
-import java.sql.{Connection, DriverManager}
+import java.sql.{SQLException, Connection, DriverManager}
 
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.redshift.AmazonRedshiftClient
@@ -19,6 +19,27 @@ trait AcceptanceTestRedshiftUtils extends AwsConfigParameters {
 
   val awsRedshiftClient = initRedshiftClient()
 
+
+  def clusterExist():Boolean = {
+    try{
+    val redshiftJDBCClient = redshiftConnectionJDBC()
+
+    val q = s"select count(distinct(tablename)) from pg_table_def;"
+    val stmt = redshiftJDBCClient.createStatement()
+    stmt.setQueryTimeout(5)
+    val resultSet = stmt.executeQuery(q)
+
+    val clusterExist = true
+
+    resultSet.close()
+    stmt.close()
+    redshiftJDBCClient.close()
+
+    clusterExist
+    }catch{
+      case e: SQLException => false
+    }
+  }
 
   def tableExist(tableName:String):Boolean = {
     val redshiftJDBCClient = redshiftConnectionJDBC()

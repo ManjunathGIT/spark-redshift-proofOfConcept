@@ -8,6 +8,7 @@ Feature: copy data from s3 to redshift
     When I request to upload CSV "csv/category.csv" to bucket "pjgg-redshift-spark" and keyName "csvRaw/category.csv"
     Then I check that the file"csvRaw/category.csv" in bucket "pjgg-redshift-spark" exist
 
+  @checkClusterItsUp
   @cleanRedshiftRecords
   @cleanS3csvRawFolder
   Scenario: copy CSV to S3 and then to redshift

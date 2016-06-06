@@ -22,7 +22,7 @@ class FromS3ToRedshift extends Matchers with ShouldVerb with ScalaFutures with E
     (csvFileName:String, bucketName:String, dbName:String, tableName:String) =>
       assertTrue(s"File $csvFileName Not found!", getFileFromResourceFolder(csvFileName).exists())
       assertTrue(s"Bucket $bucketName Not found!", checkIFS3BucketExist(bucketName))
-      assertTrue(s"Bucket $bucketName Not found!", tableExist(tableName))
+      assertTrue(s"table $tableName Not found!", tableExist(tableName))
   }
 
   Then("""^I copy file "([^"]*)" in bucket "([^"]*)" into db "([^"]*)" and table "([^"]*)"$"""){
