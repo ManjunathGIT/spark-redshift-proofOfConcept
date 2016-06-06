@@ -8,7 +8,7 @@ import scaldi.{Injectable, Injector}
 
 object SparkRedshiftTutorialRefactor extends Injectable with AwsConfigParameters {
 
-  implicit val injector:Injector = new ScaldiModule(SparkContextTest.sc)
+  implicit val injector:Injector = new ScaldiModule(SparkContextTest.sparkContextSql)
 
   val redShiftConnector = inject[RedShiftConnector]
 

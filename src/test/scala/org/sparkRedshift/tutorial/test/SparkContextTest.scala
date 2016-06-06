@@ -1,5 +1,6 @@
 package org.sparkRedshift.tutorial.test
 
+import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
 import org.sparkRedshift.tutorial.AwsConfigParameters
 
@@ -7,6 +8,8 @@ import org.sparkRedshift.tutorial.AwsConfigParameters
 object SparkContextTest extends AwsConfigParameters{
 
   val sc = init()
+
+  val sparkContextSql = new SQLContext(sc)
 
   private def init():SparkContext = {
     val initSc = new SparkContext(new SparkConf().setAppName("SparkSQL").setMaster("local"))

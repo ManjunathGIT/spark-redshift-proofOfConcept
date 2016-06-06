@@ -1,13 +1,10 @@
 package org.sparkRedshift.tutorial
 
-import org.apache.spark.{SparkContext, SparkConf}
 import org.apache.spark.sql.{SaveMode, DataFrame, SQLContext}
 import scaldi.{Injectable, Module, Injector}
 
 
-class RedShiftConnectorImpl(sc:SparkContext)(implicit injector:Injector) extends AwsConfigParameters with RedShiftConnector {
-
-  private val sqlContext = new SQLContext(sc)
+class RedShiftConnectorImpl(sqlContext:SQLContext)(implicit injector:Injector) extends AwsConfigParameters with RedShiftConnector {
 
   def readTable(tableName : Option[String] , query : Option[String], isTmpTable: Boolean = false): DataFrame = {
     if(isTmpTable) readTmpTable(tableName, query)
@@ -16,8 +13,7 @@ class RedShiftConnectorImpl(sc:SparkContext)(implicit injector:Injector) extends
 
   private def readTmpTable(tableName : Option[String] , query : Option[String]): DataFrame = {
 
-    val finalQuery = query.map(queryStatement => queryStatement)
-                            .getOrElse(tableName.map(optionalTablename => s"select * from $optionalTablename").get)
+    val finalQuery = query.getOrElse(tableName.map(optionalTablename => s"select * from $optionalTablename").get)
 
     sqlContext.sql(finalQuery)
   }
