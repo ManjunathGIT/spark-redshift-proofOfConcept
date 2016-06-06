@@ -13,5 +13,4 @@ trait RedShiftConnector {
 
   def dropTempTable( tempTableName:String):Unit
 
-  def releaseAttachedResources():Unit
 }

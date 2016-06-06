@@ -5,9 +5,12 @@ import java.sql.{Connection, DriverManager}
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.redshift.AmazonRedshiftClient
 import com.amazonaws.services.redshift.model.{DeleteClusterRequest, CreateClusterRequest}
+import org.apache.spark.{SparkConf, SparkContext}
 import org.slf4j.{LoggerFactory, Logger}
 import org.sparkRedshift.tutorial.AwsConfigParameters
 import java.util.Properties
+
+import org.sparkRedshift.tutorial.driver.example.SparkRedshiftTutorialRefactor._
 
 
 trait AcceptanceTestRedshiftUtils extends AwsConfigParameters {

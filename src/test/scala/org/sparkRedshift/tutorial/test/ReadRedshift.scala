@@ -11,7 +11,7 @@ import scaldi.{Injector, Injectable}
 
 class ReadRedshift extends Matchers with Injectable with ShouldVerb with ScalaFutures with EN with ScalaDsl with AcceptanceTestFilesUtils with AcceptanceTestRedshiftUtils{
 
-  implicit val injector:Injector = new ScaldiModule
+  implicit val injector:Injector = new ScaldiModule(SparkContextTest.sc)
 
   val redShiftConnector = inject[RedShiftConnector]
 

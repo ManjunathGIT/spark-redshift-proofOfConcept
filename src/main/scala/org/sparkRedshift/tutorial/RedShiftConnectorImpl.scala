@@ -1,22 +1,13 @@
 package org.sparkRedshift.tutorial
 
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.{SparkContext, SparkConf}
 import org.apache.spark.sql.{SaveMode, DataFrame, SQLContext}
 import scaldi.{Injectable, Module, Injector}
 
 
-class RedShiftConnectorImpl(implicit injector:Injector) extends AwsConfigParameters with RedShiftConnector {
-
-  private val sc = initSparkContext()
+class RedShiftConnectorImpl(sc:SparkContext)(implicit injector:Injector) extends AwsConfigParameters with RedShiftConnector {
 
   private val sqlContext = new SQLContext(sc)
-
-  private def initSparkContext():SparkContext = {
-    val initSc = new SparkContext(new SparkConf().setAppName("SparkSQL").setMaster("local"))
-    initSc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", getAwsAccessKey)
-    initSc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", getAwsSecretKey)
-    initSc
-  }
 
   def readTable(tableName : Option[String] , query : Option[String], isTmpTable: Boolean = false): DataFrame = {
     if(isTmpTable) readTmpTable(tableName, query)
@@ -63,10 +54,6 @@ class RedShiftConnectorImpl(implicit injector:Injector) extends AwsConfigParamet
 
   def dropTempTable( tempTableName:String):Unit = {
     sqlContext.dropTempTable(tempTableName)
-  }
-
-  def releaseAttachedResources():Unit = {
-     sc.stop()
   }
 
 }
