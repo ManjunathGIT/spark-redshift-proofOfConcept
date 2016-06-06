@@ -207,6 +207,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- coverage -->
+        <dependency>
+            <groupId>org.scoverage</groupId>
+            <artifactId>maven-scoverage-plugin</artifactId>
+            <version>0.99.10</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
