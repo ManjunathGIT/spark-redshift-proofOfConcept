@@ -2,18 +2,20 @@ package org.sparkRedshift.tutorial.test
 
 import java.io.File
 
+import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.{AmazonClientException, AmazonServiceException}
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.PutObjectRequest
 import org.slf4j.{LoggerFactory, Logger}
+import org.sparkRedshift.tutorial.AwsConfigParameters
 
 
-trait AcceptanceTestFilesUtils {
+trait AcceptanceTestFilesUtils extends AwsConfigParameters {
 
   private val LOG: Logger = LoggerFactory.getLogger("AcceptanceTestFilesUtils")
 
-  val s3Client = new AmazonS3Client(new ProfileCredentialsProvider())
+  val s3Client = new AmazonS3Client(new BasicAWSCredentials(getAwsAccessKey,getAwsSecretKey))
 
   def getFileFromResourceFolder(path: String): File = return new File(this.getClass().getClassLoader().getResource(path).getPath);
 
