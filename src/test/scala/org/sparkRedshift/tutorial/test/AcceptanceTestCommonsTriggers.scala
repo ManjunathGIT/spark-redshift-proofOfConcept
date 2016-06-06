@@ -19,4 +19,6 @@ class AcceptanceTestCommonsTriggers extends Matchers with ScalaDsl with EN with 
   After("@cleanRedshiftRecords") { scenario: Scenario =>
     deleteTable("category")
   }
+
+  def uuid() = java.util.UUID.randomUUID.toString
 }

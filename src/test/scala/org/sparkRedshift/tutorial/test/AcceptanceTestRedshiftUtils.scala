@@ -4,7 +4,7 @@ import java.sql.{Connection, DriverManager}
 
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.redshift.AmazonRedshiftClient
-import com.amazonaws.services.redshift.model.{DeleteClusterRequest, CreateClusterRequest}
+import com.amazonaws.services.redshift.model.{Cluster, DeleteClusterRequest, CreateClusterRequest}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.slf4j.{LoggerFactory, Logger}
 import org.sparkRedshift.tutorial.AwsConfigParameters
@@ -57,16 +57,15 @@ trait AcceptanceTestRedshiftUtils extends AwsConfigParameters {
     status
   }
 
-  def createCluster(clusterName:String):String = {
+  def createCluster(clusterName:String): Cluster = {
     val clusterRequest = new CreateClusterRequest()
       .withClusterIdentifier(clusterName)
       .withMasterUsername(getDbUser)
       .withMasterUserPassword(getDbPassword)
       .withNodeType("dc1.large")
-      .withNumberOfNodes(2);
+      .withNumberOfNodes(2)
 
-    val createResponse = awsRedshiftClient.createCluster(clusterRequest)
-    createResponse.getClusterIdentifier()
+     awsRedshiftClient.createCluster(clusterRequest)
   }
 
   def deleteCluster(clusterName:String):Unit = {
@@ -85,8 +84,8 @@ trait AcceptanceTestRedshiftUtils extends AwsConfigParameters {
   private def redshiftConnectionJDBC():Connection = {
     Class.forName("com.amazon.redshift.jdbc41.Driver")
     val props = new Properties()
-    props.setProperty("user", getDbUser);
-    props.setProperty("password", getDbPassword);
-    DriverManager.getConnection(getConnectionUrl, props);
+    props.setProperty("user", getDbUser)
+    props.setProperty("password", getDbPassword)
+    DriverManager.getConnection(getConnectionUrl, props)
   }
 }

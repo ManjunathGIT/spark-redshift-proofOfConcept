@@ -1,7 +1,6 @@
 package org.sparkRedshift.tutorial.test
 
 import cucumber.api.scala.{ScalaDsl, EN}
-import org.apache.spark.sql.SaveMode
 import org.junit.Assert._
 import org.scalatest.Matchers
 import org.scalatest.concurrent.ScalaFutures
@@ -29,7 +28,6 @@ class ReadRedshift extends Matchers with Injectable with ShouldVerb with ScalaFu
       val amount = categoryDF.count()
       assertTrue(s"category Table should have $expectedAmount  but has $amount records ", amount == expectedAmount)
   }
-
 
   Then("""^I create a temp table with "([^"]*)" and "([^"]*)" and check that the amount of records is (\d+)$"""){
     (tableName:String, query:String, expectedAmount:Int) =>
