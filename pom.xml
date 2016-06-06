@@ -328,4 +328,24 @@
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.scoverage</groupId>
+                <artifactId>scoverage-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <highlighting>true</highlighting>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>integration-report</report> <!-- select only one report from: report, integration-report and report-only reporters -->
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
