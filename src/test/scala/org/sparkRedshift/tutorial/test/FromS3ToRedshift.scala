@@ -6,6 +6,7 @@ import org.scalatest.Matchers
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.words.ShouldVerb
 import org.slf4j.{LoggerFactory, Logger}
+import scaldi.Injectable
 
 
 class FromS3ToRedshift extends Matchers with ShouldVerb with ScalaFutures with EN with ScalaDsl with AcceptanceTestFilesUtils with AcceptanceTestRedshiftUtils {

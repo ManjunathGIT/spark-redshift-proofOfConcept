@@ -2,9 +2,10 @@ package org.sparkRedshift.tutorial
 
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.{SaveMode, DataFrame, SQLContext}
+import scaldi.{Injectable, Module, Injector}
 
 
-object RedShiftConnectorImpl extends AwsConfigParameters {
+class RedShiftConnectorImpl(implicit injector:Injector) extends AwsConfigParameters with RedShiftConnector {
 
   private val sc = initSparkContext()
 

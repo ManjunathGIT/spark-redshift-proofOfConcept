@@ -146,6 +146,14 @@
             <version>0.6.0</version>
         </dependency>
 
+        <!-- Dependency injection -->
+        <dependency>
+            <groupId>org.scaldi</groupId>
+            <artifactId>scaldi_2.11</artifactId>
+            <version>0.5.7</version>
+        </dependency>
+
+
 
 
         <!-- acceptance test-->
