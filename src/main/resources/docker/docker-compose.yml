@@ -1,0 +1,19 @@
+version: '2'
+services:
+  spark_master:
+    image: stratio/spark:1.6.1
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    container_name: spark_master
+    environment:
+      SPARK_MODE: master
+
+  spark_slave:
+    image: stratio/spark:1.6.1
+    depends_on:
+     - spark_master
+    environment:
+      SPARK_MODE: slave
+      SPARK_MASTER_HOST: spark_master
+
