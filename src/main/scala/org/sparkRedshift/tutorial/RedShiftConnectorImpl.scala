@@ -1,10 +1,8 @@
 package org.sparkRedshift.tutorial
 
 import org.apache.spark.sql.{SaveMode, DataFrame, SQLContext}
-import scaldi.{Injector}
 
-
-class RedShiftConnectorImpl(sqlContext:SQLContext)(implicit injector:Injector) extends AwsConfigParameters with RedShiftConnector {
+class RedShiftConnectorImpl (sqlContext:SQLContext) extends AwsConfigParameters {
 
   def readTable(tableName : Option[String] , query : Option[String], isTmpTable: Boolean = false): DataFrame = {
     if(isTmpTable) readTmpTable(tableName, query)

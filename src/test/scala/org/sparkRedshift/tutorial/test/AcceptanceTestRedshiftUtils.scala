@@ -10,15 +10,12 @@ import org.slf4j.{LoggerFactory, Logger}
 import org.sparkRedshift.tutorial.AwsConfigParameters
 import java.util.Properties
 
-import org.sparkRedshift.tutorial.driver.example.SparkRedshiftTutorialRefactor._
-
 
 trait AcceptanceTestRedshiftUtils extends AwsConfigParameters {
 
   private val LOG: Logger = LoggerFactory.getLogger("AcceptanceTestRedshiftUtils")
 
   val awsRedshiftClient = initRedshiftClient()
-
 
   def clusterExist():Boolean = {
     try{

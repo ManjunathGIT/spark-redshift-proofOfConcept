@@ -3,14 +3,11 @@ package org.sparkRedshift.tutorial.driver.example
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SaveMode
 import org.sparkRedshift.tutorial.test.SparkContextTest
-import org.sparkRedshift.tutorial.{AwsConfigParameters, RedShiftConnector, ScaldiModule}
-import scaldi.{Injectable, Injector}
+import org.sparkRedshift.tutorial.{RedShiftConnectorImpl, AwsConfigParameters, RedShiftConnector}
 
-object SparkRedshiftTutorialRefactor extends Injectable with AwsConfigParameters {
+object SparkRedshiftTutorialRefactor extends AwsConfigParameters {
 
-  implicit val injector:Injector = new ScaldiModule(SparkContextTest.sparkContextSql)
-
-  val redShiftConnector = inject[RedShiftConnector]
+  val redShiftConnector = new RedShiftConnectorImpl(SparkContextTest.sparkContextSql)
 
   def main(args: Array[String]): Unit = {
 

@@ -5,14 +5,11 @@ import org.junit.Assert._
 import org.scalatest.Matchers
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.words.ShouldVerb
-import org.sparkRedshift.tutorial.{ScaldiModule, RedShiftConnector, RedShiftConnectorImpl}
-import scaldi.{Injector, Injectable}
+import org.sparkRedshift.tutorial.RedShiftConnectorImpl
 
-class ReadRedshift extends Matchers with Injectable with ShouldVerb with ScalaFutures with EN with ScalaDsl with AcceptanceTestFilesUtils with AcceptanceTestRedshiftUtils{
+class ReadRedshift extends Matchers with ShouldVerb with ScalaFutures with EN with ScalaDsl with AcceptanceTestFilesUtils with AcceptanceTestRedshiftUtils{
 
-  implicit val injector:Injector = new ScaldiModule(SparkContextTest.sparkContextSql)
-
-  val redShiftConnector = inject[RedShiftConnector]
+  val redShiftConnector = new RedShiftConnectorImpl(SparkContextTest.sparkContextSql)
 
   Then("""^using RedShiftConnector I read table "([^"]*)" form redshift and check that has (\d+) records$"""){
     (tableName:String, expectedAmount:Int) =>

@@ -8,6 +8,7 @@
         </encoder>
     </appender>
 
+
     <logger name="org.sparkRedshift.tutorial" level="INFO" />
 
     <root level="INFO">
