@@ -36,3 +36,4 @@ awsRedshiftParamaters{
 ```bash
  java -jar -Dconfig.file=/YOUR_PATH/application.conf target/spark-redshift-0.0.1.jar
 ```
+
