@@ -85,7 +85,7 @@ With the above AWS technologies you could use S3 as HDFS (where the Raw data wil
 
 ![alt text] [Architecture]
 
-[grafanaLogin]: https://github.com/pjgg/spark-redshift-proofOfConcept/tree/master/src/main/resources/doc/dataLakeExampleArq.png
+[Architecture]: https://github.com/pjgg/spark-redshift-proofOfConcept/tree/master/src/main/resources/doc/dataLakeExampleArq.png
 
 S3 bucket should be structured in a way that allow to the data analyst decided with months/years load into redshift, and redshift should be created on demand each time. Optionally would be possible to take an snapshot of redshift in case a data analyst required to work more than a day with the same dataset.
 An other approach more flexible that I didn't try is setup an HDFS + Hive with EMR and load the required data into a new redshift (created on demand). This choice will allow you to load into readshift, business data more complex than a range of dates.      
